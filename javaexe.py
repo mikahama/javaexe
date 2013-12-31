@@ -8,7 +8,8 @@ import sys
 
 #load settings
 try:
-        ini = open("options.ini", "r")
+        ini_path = os.path.dirname(os.path.abspath(sys.argv[0])) + "\\" + "options.ini"
+        ini = open(ini_path, "r")
         correct_group = False
         for line in ini:
                 if line.startswith("["):#if it's a group
@@ -28,7 +29,9 @@ except:#or use the defaults
         pass
 
 #Execute java
-jar = os.path.abspath(jar)#resolve the absolute path
+if not ":" in jar:#resolve the absolute path
+        jar = os.path.dirname(os.path.abspath(sys.argv[0])) + "\\" + jar
+        jar = os.path.abspath(jar)
 commands = execute.split(" ")
 index=0
 for command in commands:#replace &jar& with the actual path to the java file
